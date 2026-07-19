@@ -1,0 +1,31 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var settings = Umbraco.ContentAtRoot().FirstOrDefault(x => x.ContentType.Alias == "siteSettings");
+    var siteName = settings?.Value<string>("siteName");
+    var tagline  = settings?.Value<string>("headerTagline");
+    if (string.IsNullOrWhiteSpace(tagline)) { tagline = "Group golf, organized"; }
+}
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/">
+            @if (!string.IsNullOrWhiteSpace(siteName))
+            {
+                <span>@siteName</span>
+            }
+            else
+            {
+                <span><span class="brand-mark">Golf Group</span> Admin</span>
+            }
+            <small>@tagline</small>
+        </a>
+
+        <nav class="nav" id="primaryNav">
+            <a href="/features">Features</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/support">Support</a>
+            <a class="btn btn-primary nav-cta" href="/signin">Sign in</a>
+        </nav>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    </div>
+</header>

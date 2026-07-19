@@ -1,0 +1,86 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var eyebrow = Model?.Value<string>("heroEyebrow");
+    if (string.IsNullOrWhiteSpace(eyebrow)) { eyebrow = "Golf Group Admin"; }
+    var heading = Model?.Value<string>("heroHeading");
+    if (string.IsNullOrWhiteSpace(heading)) { heading = "Your golf group, running like clockwork."; }
+    var lede = Model?.Value<string>("heroLede");
+    if (string.IsNullOrWhiteSpace(lede)) { lede = "Members, weekly sign-ups, team draws, live scoring, skins and season-long power rankings — everything your group needs, in one place."; }
+
+    var heroImage = Model?.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("heroImage");
+    var heroStyle = heroImage != null
+        ? $"background-image:linear-gradient(rgba(22,40,30,.55), rgba(22,40,30,.75)), url('{heroImage.Url()}')"
+        : null;
+}
+<section class="hero @(heroImage == null ? "hero--fairway" : null)" style="@heroStyle">
+    <div class="container">
+        <p class="eyebrow">@eyebrow</p>
+        <h1>@heading</h1>
+        <p class="lede">@lede</p>
+        <div class="hero-actions">
+            <a class="btn btn-gold" href="#features">See what it does</a>
+            <a class="btn btn-ghost" href="/signin">Sign in</a>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="features">
+    <div class="container">
+        <p class="eyebrow">Everything handled</p>
+        <h2>Run the whole season from one place</h2>
+        <div class="feature-grid">
+            <article class="card">
+                <span class="card-icon">&#128101;</span>
+                <h3>Members &amp; roster</h3>
+                <p>One clean roster — handicaps, preferred tees, contact details and roles. Invite members and hand out admin duties without spreadsheets.</p>
+            </article>
+            <article class="card">
+                <span class="card-icon">&#128197;</span>
+                <h3>Schedule &amp; sign-ups</h3>
+                <p>Recurring weekly matches with tee times, one-tap sign-up and withdraw, and a live count of who's playing before you leave the house.</p>
+            </article>
+            <article class="card">
+                <span class="card-icon">&#127922;</span>
+                <h3>Team picking</h3>
+                <p>Auto-draw balanced teams by your group's rules — threesomes, fivesomes, captains — or drag players where you want them.</p>
+            </article>
+            <article class="card">
+                <span class="card-icon">&#9971;</span>
+                <h3>Scoring &amp; skins</h3>
+                <p>Hole-by-hole cards, gross and net leaderboards, and skins with carries computed automatically under your group's rules.</p>
+            </article>
+            <article class="card">
+                <span class="card-icon">&#127942;</span>
+                <h3>Reports &amp; rankings</h3>
+                <p>Handicaps, scoring averages and season power rankings, recomputed from every card — with scorecard history a click away.</p>
+            </article>
+            <article class="card">
+                <span class="card-icon">&#128181;</span>
+                <h3>Dues &amp; payouts</h3>
+                <p>Annual dues, entry fees, the hole-in-one club and skins money — tracked per match so settling up takes minutes, not arguments.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section section--tint">
+    <div class="container">
+        <p class="eyebrow">One platform</p>
+        <h2>On the web, on your phone, at the course</h2>
+        <p class="section-lede">Golf Group Admin runs on desktop, mobile and right here on the web. Group management lives on the site, and the features your players use every week are shared across all three.</p>
+        <div class="platform-row">
+            <div class="platform">
+                <h3>Web</h3>
+                <p>Group management first — the roster, schedule and settings your admins live in.</p>
+            </div>
+            <div class="platform">
+                <h3>Mobile</h3>
+                <p>Sign-ups, live scoring and leaderboards in every player's pocket.</p>
+            </div>
+            <div class="platform">
+                <h3>Desktop</h3>
+                <p>The full admin console for match day — teams, cards, skins and settlement.</p>
+            </div>
+        </div>
+    </div>
+</section>

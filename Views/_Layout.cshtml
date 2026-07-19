@@ -1,0 +1,30 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var settings = Umbraco.ContentAtRoot().FirstOrDefault(x => x.ContentType.Alias == "siteSettings");
+    var siteTitle = settings?.Value<string>("siteName");
+    if (string.IsNullOrWhiteSpace(siteTitle)) { siteTitle = "Golf Group Admin"; }
+    var pageName = Model?.Name ?? siteTitle;
+    var title = ViewData.ContainsKey("Title") ? ViewData["Title"] : $"{pageName} — {siteTitle}";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@title</title>
+    <meta name="description" content="@(ViewData.ContainsKey("Description") ? ViewData["Description"] : "Golf Group Admin runs your golf group — members, weekly sign-ups, team draws, live scoring, skins and season-long power rankings.")" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @await Html.PartialAsync("_SiteHeader")
+
+    <main>
+        @RenderBody()
+    </main>
+
+    @await Html.PartialAsync("_SiteFooter")
+
+    <script src="/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
