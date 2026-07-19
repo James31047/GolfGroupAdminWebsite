@@ -1,0 +1,93 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var heading = Model?.Value<string>("heroHeading");
+    if (string.IsNullOrWhiteSpace(heading)) { heading = "Everything a golf group needs. Nothing it doesn't."; }
+    var lede = Model?.Value<string>("heroLede");
+    if (string.IsNullOrWhiteSpace(lede)) { lede = "Golf Group Admin replaces the spreadsheet, the group text thread and the shoebox of scorecards. Here's what it does, straight from the app."; }
+
+    var sections = new[]
+    {
+        new {
+            Eyebrow = "Schedule & sign-ups",
+            Title = "Set the schedule once. Every week runs itself.",
+            Copy = "Recurring Tuesday and Thursday matches with tee times, materialized months ahead. Players sign up or withdraw with one tap, and you can see who's playing before you leave the house.",
+            Img = "schedule", Alt = "The Schedule screen listing upcoming recurring matches with sign-up counts"
+        },
+        new {
+            Eyebrow = "Team picking",
+            Title = "Fair teams in one tap.",
+            Copy = "Auto-draw balanced teams under your group's rules — allow threesomes or fivesomes, cap the odd-size teams, and captains are assigned automatically. Prefer to hand-pick? Tap players onto team cards instead.",
+            Img = "teams", Alt = "The Teams screen with three drawn foursomes and captain stars"
+        },
+        new {
+            Eyebrow = "Scoring & skins",
+            Title = "Every card, every hole, remembered.",
+            Copy = "Hole-by-hole scorecards for every round — birdies circled, eagles flagged, blow-ups boxed. Per-hole averages for your home course build up over time, and skins with carries are computed under your group's own rules.",
+            Img = "scorecards", Alt = "A member's scorecard history with per-hole course averages and year tabs"
+        },
+        new {
+            Eyebrow = "Reports & rankings",
+            Title = "Bragging rights, computed.",
+            Copy = "A season-long power ranking that weights recent form, WHS-style handicap indexes recomputed from every card, scoring averages and birdie rates — all from your group's real rounds, never typed in by hand.",
+            Img = "power-ranking", Alt = "The Power ranking report with form arrows and points per round"
+        },
+        new {
+            Eyebrow = "Members & roster",
+            Title = "The whole group, one roster.",
+            Copy = "Handicaps, preferred tees, birthdays for age-based tee policies, and who has a login. Invite members, hand out admin roles — permanent or temporary — and keep the roster searchable as the group grows.",
+            Img = "members", Alt = "The Members screen with a searchable roster and handicaps"
+        },
+        new {
+            Eyebrow = "Dues & payouts",
+            Title = "Money without the arguments.",
+            Copy = "Annual dues, match entry fees for members and guests, a group fund contribution per player, skins values and even a hole-in-one club — set the rules once and every match settles the same way.",
+            Img = "money", Alt = "The Group money settings with dues, entry fees and hole-in-one club"
+        }
+    };
+}
+<section class="features-hero">
+    <div class="container">
+        <p class="eyebrow">Features</p>
+        <h1>@heading</h1>
+        <p class="lede">@lede</p>
+    </div>
+</section>
+
+<section class="features-showcase">
+    <div class="container">
+        <div class="app-frame app-frame--hero">
+            <img src="/img/features/home.png" alt="The Golf Group Admin dashboard with the next match and handicap tiles" loading="eager" />
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        @foreach (var s in sections)
+        {
+            <div class="feature-row">
+                <div class="feature-row__text">
+                    <p class="eyebrow">@s.Eyebrow</p>
+                    <h2>@s.Title</h2>
+                    <p>@s.Copy</p>
+                </div>
+                <div class="feature-row__media">
+                    <div class="app-frame">
+                        <img src="/img/features/@(s.Img).png" alt="@s.Alt" loading="lazy" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="section section--tint">
+    <div class="container cta-band">
+        <h2>Ready to run your group like clockwork?</h2>
+        <p class="section-lede">Group management on the web, sign-ups and scores on every phone, the full admin console on the desktop.</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="/pricing">See pricing</a>
+            <a class="btn btn-outline" href="/signin">Sign in</a>
+        </div>
+    </div>
+</section>
