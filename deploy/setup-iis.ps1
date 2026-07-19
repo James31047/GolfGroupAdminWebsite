@@ -234,6 +234,15 @@ if ($ImportUSync) {
     $logDir = Join-Path $SitePath 'umbraco\Logs'
     $before = if (Test-Path $logDir) { (Get-ChildItem $logDir -Filter *.json -File | Measure-Object -Property Length -Sum).Sum } else { 0 }
 
+    # The Templates handler saves each imported template's physical .cshtml into
+    # Views\, where the pool identity deliberately has read-only access - without
+    # a temporary grant any NEW template in the import dies with
+    # UnauthorizedAccessException (first hit deploying this site's features page,
+    # 2026-07-19). Granted here, revoked after the import.
+    $viewsPath = Join-Path $SitePath 'Views'
+    & icacls $viewsPath /grant "${identity}:(OI)(CI)(M)" /Q | Out-Null
+    Write-Ok "Temporary write access on Views\ granted to $identity."
+
     # ExportAtStartup MUST be off for this boot: an export running first writes the
     # database's current state over the .config files and destroys what we intend
     # to import.
@@ -279,6 +288,9 @@ if ($ImportUSync) {
     Remove-PoolEnv 'uSync__Settings__ExportAtStartup'
     Restart-WebAppPool -Name $AppPoolName
     Write-Ok "Import flags removed; pool recycled back to normal operation."
+
+    & icacls $viewsPath /remove:g $identity /Q | Out-Null
+    Write-Ok "Views\ write access revoked (inherited read-only remains)."
 }
 
 # ---- HTTPS via win-acme ---------------------------------------------------
